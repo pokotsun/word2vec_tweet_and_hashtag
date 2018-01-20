@@ -10,30 +10,29 @@ def main():
     # _make_dictionary("texts/tweets_syokutyudoku.txt", 'syokutyudoku_tweet_dictionary.txt')
     # dictionary = corpora.Dictionary.load_from_text('syokutyudoku_tweet_dictionary.txt')
     # words = util.get_tweet_words("texts/tweets_syokutyudoku.txt")
+    _save_model(util.get_tweet_words("texts/tweets_syokutyudoku.txt"))
 
-
-
+    show_answer()
 
 # BOW用の辞書作成
 def _make_dictionary(src_name, output_name):
     words = util.get_tweet_words(src_name)
     dictionary = corpora.Dictionary(words)
-    dictionary =
     print(f"dictionary: {dictionary}")
     dictionary.save_as_text(output_name)
 
 
 # Word2Vec用のmodelを生成する
 def _save_model(words):
-    model = word2vec.Word2Vec(words, size=200, min_count=20, window=15)
+    model = word2vec.Word2Vec(words, size=600, min_count=40, window=5)
     model.save("./syokutyudoku.model")
 
 
-def show_answer:
+
+def show_answer():
     model = word2vec.Word2Vec.load("syokutyudoku.model")
 
     argvs = sys.argv
-    print(f"argvs_len = {len(argvs)}")
     if len(argvs) == 2:
         word = argvs[1]
         print(f"word[{word}]に近いワードは以下の単語たちです。")
